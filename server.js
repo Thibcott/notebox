@@ -50,8 +50,8 @@ ensureDirs();
 app.use(express.json({ limit: "10mb" }));
 
 // --- Authentication Middleware ---
-// Default password is 'P@$$w0rd' (can be changed via process.env.NOTEBOX_PASSWORD)
-const PASSWORD = process.env.NOTEBOX_PASSWORD || "P@$$w0rd";
+
+const PASSWORD = process.env.NOTEBOX_PASSWORD;
 
 app.post("/api/login", (req, res) => {
   if (req.body.password === PASSWORD) {
