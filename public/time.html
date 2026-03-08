@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <base href="/notebox/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notebox - Timbreuse</title>
+    <link rel="icon" <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗒️</text></svg>">
+    <link rel="stylesheet" href="/notebox/styles.css" />
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">🗒️</div>
+                <div>
+                    <div class="title">Notebox</div>
+                    <div class="subtitle">Projets • Onglets • Images • Code</div>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="/notebox/" class="nav-item">📝 Notes</a>
+                <a href="/notebox/time.html" class="nav-item active">⏱️ Timbreuse</a>
+            </nav>
+            <hr class="nav-sep" />
+
+            <div class="footer">
+                <div class="small">Info</div>
+                <ul>
+                    <li>Objectif journalier : 8h24 (504 min)</li>
+                    <li>Gérez vos punchs et ajustements manuels.</li>
+                    <li>Calcule automatiquement votre balance (heures supp).</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main" style="grid-template-rows: auto 1fr; overflow: auto;">
+            <header class="topbar">
+                <div class="crumbs">
+                    <button id="btnToggleSidebar" class="mobile-only">☰</button>
+                    <span class="title" style="font-weight:600; font-size:18px;">Timbreuse - Suivi du temps de
+                        travail</span>
+                </div>
+                <div class="actions">
+
+                    <button id="btnExportCSV">⬇️ Exporter CSV</button>
+                </div>
+            </header>
+
+            <section class="work" style="grid-template-columns: 1fr 1fr; align-items: start; height: auto;">
+
+                <div class="preview" style="height: auto; max-height: none;">
+                    <div class="previewHead"
+                        style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid #333333; margin-bottom: 16px; padding-bottom: 16px;">
+                        <span style="font-size: 18px; font-weight: 600; color: #ffffff;"><span
+                                id="currentDateLabel">Aujourd'hui</span></span>
+                        <div class="punch-group">
+                            <button id="btnStartWork" class="punch-btn punch-btn-start">
+                                <span style="font-size: 14px;">▶</span> Démarrer
+                            </button>
+                            <button id="btnPauseWork" class="punch-btn punch-btn-pause hidden">
+                                <span style="font-size: 14px;">⏸</span> Pause
+                            </button>
+                            <button id="btnFinishWork" class="punch-btn punch-btn-finish hidden">
+                                <span style="font-size: 14px;">⏹</span> Fin de journée
+                            </button>
+                        </div>
+                    </div>
+                    <div class="previewBody">
+                        <h3 style="margin-top:0;">Intervalles</h3>
+                        <div id="intervalsList"
+                            style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;"></div>
+
+                        <hr style="border:0; border-top:1px solid #1a1f2a; margin: 20px 0;">
+
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <h3 style="margin:0; font-size:16px;">Ajout manuel</h3>
+                            <div style="display:flex; gap:8px;">
+                                <input type="time" id="manualStart"
+                                    style="padding: 4px; border-radius: 4px; border: 1px solid #3c3c3c; background: #3c3c3c; color: white; width: 100px;" />
+                                <span style="align-self: center; font-size: 14px;">à</span>
+                                <input type="time" id="manualEnd"
+                                    style="padding: 4px; border-radius: 4px; border: 1px solid #3c3c3c; background: #3c3c3c; color: white; width: 100px;" />
+                                <button id="btnAddManualInterval">Ajouter (+)</button>
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px solid #1a1f2a; margin: 20px 0;">
+
+                        <div style="background:#252526; padding: 20px; border-radius: 6px; border: 1px solid #333333;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span style="opacity:.8;">Temps travaillé :</span> <strong id="workedTimeDisplay">0h
+                                    00m</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span style="opacity:.8;">Cible journalière :</span> <strong>8h 24m</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span style="opacity:.8;">Fin estimée :</span> <strong id="estimatedEndDisplay"
+                                    style="color: #0078d4;">—</strong>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top: 12px; padding-top:12px; border-top:1px solid #232a39; font-size: 18px;">
+                                <span style="font-weight: bold;">Balance quotidienne :</span> <strong
+                                    id="dailyBalanceDisplay" style="color: #8db0ff;">+0m</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview" style="height: auto; max-height: none;">
+                    <div class="previewHead" style="font-weight: 600;">Vue Mensuelle</div>
+                    <div class="previewBody" id="monthlyView" style="display: flex; flex-direction: column; gap: 8px;">
+                        <!-- list of days will be rendered here -->
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+    <script src="time.js"></script>
+</body>
+
+</html>

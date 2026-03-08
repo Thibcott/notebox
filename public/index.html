@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <base href="/notebox/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notebox</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗒️</text></svg>">
+  <link rel="stylesheet" href="/notebox/styles.css" />
+  <!-- Markdown + sanitize + code highlight (CDN). If you want 100% offline, tell me and I’ll bundle them locally. -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.5/dist/purify.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">🗒️</div>
+        <div>
+          <div class="title">Notebox</div>
+          <div class="subtitle">Notes • Images • Code</div>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="/notebox/" class="nav-item active">📝 Notes</a>
+        <a href="/notebox/time.html" class="nav-item">⏱️ Timbreuse</a>
+      </nav>
+
+      <hr class="nav-sep" />
+
+      <div class="row">
+        <input id="newProjectName" placeholder="Nouvelle note..." />
+        <button id="btnCreateProject">Créer</button>
+      </div>
+
+      <div id="projects" class="projects"></div>
+
+      <div class="footer">
+        <div class="small">Tips</div>
+        <ul>
+          <li>Upload image via bouton 📷 ou colle une capture (Ctrl+V) dans l’éditeur.</li>
+          <li>Code en couleur avec <code>```js</code>… ou colle du code : auto-détection.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumbs">
+          <button id="btnToggleSidebar" class="mobile-only">☰</button>
+          <span id="currentProjectName">—</span>
+          <span id="saveState" class="save-state"> </span>
+        </div>
+
+        <div class="actions">
+          <button id="btnWrapCode" title="Entoure la sélection en bloc code">{"</>"} Code</button>
+
+          <label class="upload">
+            📷 Ajouter image
+            <input id="imageInput" type="file" accept="image/*" />
+          </label>
+
+          <button id="btnTogglePreview" title="Ouvrir l’aperçu dans un nouvel onglet">Aperçu</button>
+          <button id="btnExportProject" title="Télécharger la note en Markdown">⬇️ Exporter</button>
+
+          <button id="btnDeleteProject" class="danger">Supprimer la note</button>
+        </div>
+      </header>
+
+      <section class="work">
+        <div class="editor">
+          <div class="editor-container">
+            <div class="line-numbers" id="lineNumbers">1</div>
+            <textarea id="content" placeholder="Tape ici… (Markdown supporté)" spellcheck="true"></textarea>
+          </div>
+          <div class="hint">
+            Markdown supporté : titres, listes, <code>```lang</code> pour code, et <code>![image](/uploads/...)</code>
+            pour images.
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

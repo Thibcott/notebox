@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <base href="/notebox/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notebox - Login</title>
+    <link rel="stylesheet" href="/notebox/styles.css" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #1e1e1e;
+            margin: 0;
+            font-family: inherit;
+        }
+
+        .login-box {
+            background: #252526;
+            padding: 32px;
+            border-radius: 8px;
+            border: 1px solid #333333;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-top: 0;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+
+        .login-box input {
+            margin-bottom: 16px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #0078d4;
+        }
+
+        .login-box button:hover {
+            background: #106ebe;
+        }
+
+        .error {
+            color: #f87171;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>Notebox 🔐</h2>
+        <div id="error" class="error">Mot de passe incorrect</div>
+        <form id="loginForm">
+            <input type="password" id="password" placeholder="Mot de passe" required autofocus />
+            <button type="submit">Se connecter</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").onsubmit = async (e) => {
+            e.preventDefault();
+            const pwd = document.getElementById("password").value;
+            const res = await fetch("/notebox/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password: pwd })
+            });
+            if (res.ok) {
+                window.location.href = "/notebox/";
+            } else {
+                document.getElementById("error").style.display = "block";
+            }
+        };
+    </script>
+</body>
+
+</html>
