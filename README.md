@@ -16,7 +16,6 @@ Ce projet a été généré, debuggué, et enrichi **intégralement par l'IA Ant
 ## Installation (Linux/Windows)
 
 ```bash
-git clone <votre_depot>
 cd notebox
 npm install
 ```
