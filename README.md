@@ -2,7 +2,7 @@
 
 Mini web-app Node.js/Express pour notes par **projet** + **onglets**, avec **images** (upload + collage Ctrl+V) et **aperçu Markdown** avec **coloration du code**.
 
-Ce projet a été généré, debuggué, et enrichi **intégralement par l'IA Antigravity (Google Deepmind)**, sans intervention manuelle sur le code par l'utilisateur.
+Ce projet a été généré, debuggué, et enrichi **intégralement par l'IA Antigravity (Google Deepmind)**, sans intervention manuelle sur le code. Dans le but de tester et d’explorer les limites de l’IA. 
 
 ## Fonctionnalités Principales
 
