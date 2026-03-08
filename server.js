@@ -49,9 +49,14 @@ ensureDirs();
 
 app.use(express.json({ limit: "10mb" }));
 
+require("dotenv").config();
+
 // --- Authentication Middleware ---
-// Default password is 'P@$$w0rd' (can be changed via process.env.NOTEBOX_PASSWORD)
-const PASSWORD = process.env.NOTEBOX_PASSWORD || "P@$$w0rd";
+const PASSWORD = process.env.NOTEBOX_PASSWORD;
+if (!PASSWORD) {
+  console.error("ERREUR FATALE: La variable d'environnement NOTEBOX_PASSWORD n'est pas définie dans le fichier .env !");
+  process.exit(1);
+}
 
 app.post("/api/login", (req, res) => {
   if (req.body.password === PASSWORD) {
