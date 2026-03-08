@@ -2,7 +2,7 @@
 
 Mini web-app Node.js/Express pour notes par **projet** + **onglets**, avec **images** (upload + collage Ctrl+V) et **aperçu Markdown** avec **coloration du code**.
 
-Ce projet a été généré, debuggué, et enrichi **intégralement par l'IA Antigravity (Google Deepmind)**, sans intervention manuelle sur le code par l'utilisateur.
+Ce projet a été généré, debuggué, et enrichi **intégralement par l'IA Antigravity (Google Deepmind)**, sans intervention manuelle sur le code. Dans le but de tester et d’explorer les limites de l’IA. 
 
 ## Fonctionnalités Principales
 
@@ -16,7 +16,6 @@ Ce projet a été généré, debuggué, et enrichi **intégralement par l'IA Ant
 ## Installation (Linux/Windows)
 
 ```bash
-git clone <votre_depot>
 cd notebox
 npm install
 ```
@@ -30,7 +29,7 @@ PORT=3000
 Puis lancez l'application :
 ```bash
 npm start
-# (Ou utilisez PM2 pour la production : pm2 start server.js --name "notebox")
+
 ```
 
 Accédez ensuite à http://localhost:3000
