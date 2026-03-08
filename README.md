@@ -30,7 +30,7 @@ PORT=3000
 Puis lancez l'application :
 ```bash
 npm start
-# (Ou utilisez PM2 pour la production : pm2 start server.js --name "notebox")
+
 ```
 
 Accédez ensuite à http://localhost:3000
