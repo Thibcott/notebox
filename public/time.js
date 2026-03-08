@@ -217,6 +217,24 @@ if (btnAddManual) {
     };
 }
 
+const btnDeleteDay = document.getElementById("btnDeleteDay");
+if (btnDeleteDay) {
+    btnDeleteDay.onclick = async () => {
+        if (!confirm(`Voulez-vous vraiment supprimer toutes les données du jour sélectionné (${currentDateStr}) ?`)) return;
+        delete timeData[currentDateStr];
+        if (currentDateStr === getTodayStr()) {
+            timeData[currentDateStr] = { intervals: [], manualAdjustment: 0 };
+        } else {
+            currentDateStr = getTodayStr();
+            document.getElementById("currentDateLabel").innerText = "Aujourd'hui";
+            if (!timeData[currentDateStr]) {
+                timeData[currentDateStr] = { intervals: [], manualAdjustment: 0 };
+            }
+        }
+        await saveData();
+    };
+}
+
 function renderMonthly() {
     const list = document.getElementById("monthlyView");
     list.innerHTML = "";
@@ -228,8 +246,12 @@ function renderMonthly() {
         })
         .sort().reverse();
 
+    let globalBalance = 0;
+
     if (days.length === 0) {
         list.innerHTML = "<div class='hint'>Aucune donnée enregistrée.</div>";
+        const gbEl = document.getElementById("globalBalanceDisplay");
+        if (gbEl) gbEl.innerHTML = "";
         return;
     }
 
@@ -237,6 +259,7 @@ function renderMonthly() {
         const dRec = timeData[day];
         const worked = computeDailyMinutes(dRec);
         const balance = worked - TARGET_MINUTES;
+        globalBalance += balance;
         const isToday = day === getTodayStr();
         const isSelected = day === currentDateStr;
         const color = balance >= 0 ? "#4caf50" : "#f87171";
@@ -260,6 +283,13 @@ function renderMonthly() {
         };
         list.appendChild(div);
     });
+
+    const gbEl = document.getElementById("globalBalanceDisplay");
+    if (gbEl) {
+        const sign = globalBalance >= 0 ? '+' : '';
+        const color = globalBalance >= 0 ? '#4caf50' : '#f87171';
+        gbEl.innerHTML = `Total : <strong style="color: ${color}">${sign}${formatMinutes(globalBalance)}</strong>`;
+    }
 }
 
 document.getElementById("btnExportCSV").onclick = () => {

@@ -56,8 +56,12 @@
                 <div class="preview" style="height: auto; max-height: none;">
                     <div class="previewHead"
                         style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid #333333; margin-bottom: 16px; padding-bottom: 16px;">
-                        <span style="font-size: 18px; font-weight: 600; color: #ffffff;"><span
-                                id="currentDateLabel">Aujourd'hui</span></span>
+                        <span style="font-size: 18px; font-weight: 600; color: #ffffff;">
+                            <span id="currentDateLabel">Aujourd'hui</span>
+                            <button id="btnDeleteDay" class="danger"
+                                style="margin-left: 12px; font-size: 12px; padding: 4px 8px; vertical-align: middle;">Supprimer
+                                la journée</button>
+                        </span>
                         <div class="punch-group">
                             <button id="btnStartWork" class="punch-btn punch-btn-start">
                                 <span style="font-size: 14px;">▶</span> Démarrer
@@ -114,7 +118,10 @@
                 </div>
 
                 <div class="preview" style="height: auto; max-height: none;">
-                    <div class="previewHead" style="font-weight: 600;">Vue Mensuelle</div>
+                    <div class="previewHead" style="display:flex; justify-content:space-between; font-weight: 600;">
+                        <span>Vue Mensuelle</span>
+                        <span id="globalBalanceDisplay" style="font-size: 14px;"></span>
+                    </div>
                     <div class="previewBody" id="monthlyView" style="display: flex; flex-direction: column; gap: 8px;">
                         <!-- list of days will be rendered here -->
                     </div>
