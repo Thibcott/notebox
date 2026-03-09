@@ -58,10 +58,8 @@ if (!PASSWORD) {
   console.error("ERREUR FATALE: La variable d'environnement NOTEBOX_PASSWORD n'est pas définie dans le fichier .env !");
   process.exit(1);
 }
-=======
 
 const PASSWORD = process.env.NOTEBOX_PASSWORD;
->>>>>>> 897c684fb16b4de3b8cafdf5c7d08661ccd72f49
 
 app.post("/api/login", (req, res) => {
   if (req.body.password === PASSWORD) {
