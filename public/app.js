@@ -121,28 +121,6 @@ function restoreCurrentTabState() {
       ta.scrollTop = 0;
       ta.selectionStart = ta.selectionEnd = 0;
     }
-    syncScroll();
-  }
-}
-
-function updateLineNumbers() {
-  const ta = $("content");
-  const ln = $("lineNumbers");
-  if (!ta || !ln) return;
-  const linesCount = ta.value.split('\\n').length;
-  // We recreate the numbers string only if lines count changed, to avoid DOM updates
-  const currentCount = ln.childElementCount || (ln.textContent.match(/\\n/g) || []).length + 1;
-
-  if (linesCount !== currentCount || !ln.textContent) {
-    ln.textContent = Array.from({ length: linesCount }, (_, i) => i + 1).join('\\n');
-  }
-}
-
-function syncScroll() {
-  const ta = $("content");
-  const ln = $("lineNumbers");
-  if (ta && ln) {
-    ln.scrollTop = ta.scrollTop;
   }
 }
 
@@ -217,7 +195,6 @@ function renderEditor() {
 
   const ta = $("content");
   ta.value = t ? (t.content || "") : "";
-  updateLineNumbers();
 
   // Use timeout to allow textarea to render before restoring scroll
   setTimeout(restoreCurrentTabState, 0);
@@ -367,11 +344,8 @@ function bindEvents() {
   }
 
   $("content").addEventListener("input", () => {
-    updateLineNumbers();
     scheduleSave();
   });
-
-  $("content").addEventListener("scroll", syncScroll);
 
   $("content").addEventListener("keydown", (e) => {
     if (e.key === "Tab") {
