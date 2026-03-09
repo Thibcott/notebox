@@ -52,14 +52,12 @@ app.use(express.json({ limit: "10mb" }));
 require("dotenv").config();
 
 // --- Authentication Middleware ---
-<<<<<<< HEAD
+
 const PASSWORD = process.env.NOTEBOX_PASSWORD;
 if (!PASSWORD) {
   console.error("ERREUR FATALE: La variable d'environnement NOTEBOX_PASSWORD n'est pas définie dans le fichier .env !");
   process.exit(1);
 }
-
-const PASSWORD = process.env.NOTEBOX_PASSWORD;
 
 app.post("/api/login", (req, res) => {
   if (req.body.password === PASSWORD) {
