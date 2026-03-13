@@ -58,7 +58,11 @@ function computeDailyMinutes(record) {
         const start = parseTime(inv.start);
         const end = inv.stop ? parseTime(inv.stop) : now;
         if (start) {
-            total += (end - start) / 60000;
+            let diff = (end - start) / 60000;
+            if (diff < 0) {
+                diff += 24 * 60; // Cross midnight
+            }
+            total += diff;
         }
     });
     total += (record.manualAdjustment || 0);
@@ -213,6 +217,25 @@ if (btnAddManual) {
             await saveData();
         } else {
             alert("Veuillez renseigner une heure de début et de fin.");
+        }
+    };
+}
+
+const btnPlanVacation = document.getElementById("btnPlanVacation");
+if (btnPlanVacation) {
+    btnPlanVacation.onclick = async () => {
+        const vDate = document.getElementById("vacationDate").value;
+        if (vDate) {
+            if (!timeData[vDate]) {
+                timeData[vDate] = { intervals: [], manualAdjustment: 0 };
+            }
+            timeData[vDate].manualAdjustment += TARGET_MINUTES;
+            document.getElementById("vacationDate").value = "";
+            await saveData();
+            render();
+            alert("Congé planifié avec succès pour le " + vDate);
+        } else {
+            alert("Veuillez sélectionner une date.");
         }
     };
 }
