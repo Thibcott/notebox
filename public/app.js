@@ -54,11 +54,21 @@ async function uploadImageFile(file) {
 
 async function loadProjects() {
   state.projects = await api("api/projects");
-  if (!state.currentProjectId && state.projects[0]) {
+  sortProjects();
+  if (!state.currentProjectId && state.projects.length > 0) {
     state.currentProjectId = state.projects[0].id;
     state.currentTabId = state.projects[0].tabs[0]?.id || null;
   }
   render();
+}
+
+function maxUpdatedAt(p) {
+  if (!p.tabs || p.tabs.length === 0) return p.createdAt;
+  return p.tabs.reduce((max, tab) => (tab.updatedAt > max ? tab.updatedAt : max), p.tabs[0].updatedAt) || p.createdAt;
+}
+
+function sortProjects() {
+  state.projects.sort((a, b) => new Date(maxUpdatedAt(b)) - new Date(maxUpdatedAt(a)));
 }
 
 function getCurrentProject() {
@@ -212,10 +222,19 @@ function scheduleSave() {
   state.saveTimer = setTimeout(async () => {
     try {
       const content = $("content").value;
-      await api(`api/projects/${p.id}/tabs/${t.id}/content`, {
+      const res = await api(`api/projects/${p.id}/tabs/${t.id}/content`, {
         method: "PUT",
         body: JSON.stringify({ content })
       });
+      if (res && res.updatedAt) {
+        t.updatedAt = res.updatedAt;
+      } else {
+        t.updatedAt = new Date().toISOString();
+      }
+      t.content = content;
+      sortProjects();
+      renderProjects();
+      
       state.dirty = false;
       setSaveState("enregistré");
     } catch (e) {

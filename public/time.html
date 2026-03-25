@@ -25,6 +25,7 @@
             <nav class="main-nav">
                 <a href="/notebox/" class="nav-item">📝 Notes</a>
                 <a href="/notebox/time.html" class="nav-item active">⏱️ Timbreuse</a>
+                <a href="/notebox/tasks.html" class="nav-item">☑️ Tâches</a>
             </nav>
             <hr class="nav-sep" />
 
@@ -38,7 +39,7 @@
             </div>
         </aside>
 
-        <main class="main" style="grid-template-rows: auto 1fr; overflow: auto;">
+        <main class="main" style="overflow: auto;">
             <header class="topbar">
                 <div class="crumbs">
                     <button id="btnToggleSidebar" class="mobile-only">☰</button>
@@ -51,9 +52,9 @@
                 </div>
             </header>
 
-            <section class="work" style="grid-template-columns: 1fr 1fr; align-items: start; height: auto;">
+            <section class="work" style="grid-template-columns: 1fr 1fr; align-items: start;">
 
-                <div class="preview" style="height: auto; max-height: none;">
+                <div class="preview">
                     <div class="previewHead"
                         style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid #333333; margin-bottom: 16px; padding-bottom: 16px;">
                         <span style="font-size: 18px; font-weight: 600; color: #ffffff;">
@@ -129,7 +130,7 @@
                     </div>
                 </div>
 
-                <div class="preview" style="height: auto; max-height: none;">
+                <div class="preview">
                     <div class="previewHead" style="display:flex; justify-content:space-between; font-weight: 600;">
                         <span>Vue Mensuelle</span>
                         <span id="globalBalanceDisplay" style="font-size: 14px;"></span>

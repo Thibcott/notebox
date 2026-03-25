@@ -123,7 +123,8 @@ app.post("/api/projects", async (req, res) => {
     createdAt: new Date().toISOString(),
     tabs: [
       { id: nanoid(10), title: "Note 1", content: "", updatedAt: new Date().toISOString() }
-    ]
+    ],
+    tasks: []
   };
   db.projects.unshift(project);
   await writeDB(db);
@@ -206,6 +207,57 @@ app.put("/api/projects/:projectId/tabs/:tabId/content", async (req, res) => {
   tab.updatedAt = new Date().toISOString();
   await writeDB(db);
   res.json({ ok: true, updatedAt: tab.updatedAt });
+});
+
+// --- TASKS API ---
+
+app.post("/api/projects/:projectId/tasks", async (req, res) => {
+  const { projectId } = req.params;
+  const title = (req.body?.title || "New Task").trim() || "New Task";
+
+  const db = await readDB();
+  const project = db.projects.find(p => p.id === projectId);
+  if (!project) return res.status(404).json({ error: "Project not found" });
+
+  if (!project.tasks) project.tasks = [];
+  const task = { id: nanoid(10), title, completed: false, createdAt: new Date().toISOString() };
+  project.tasks.push(task);
+  await writeDB(db);
+  res.json(task);
+});
+
+app.patch("/api/projects/:projectId/tasks/:taskId", async (req, res) => {
+  const { projectId, taskId } = req.params;
+  
+  const db = await readDB();
+  const project = db.projects.find(p => p.id === projectId);
+  if (!project) return res.status(404).json({ error: "Project not found" });
+
+  if (!project.tasks) project.tasks = [];
+  const task = project.tasks.find(t => t.id === taskId);
+  if (!task) return res.status(404).json({ error: "Task not found" });
+
+  if (req.body.title !== undefined) task.title = req.body.title.trim() || task.title;
+  if (req.body.completed !== undefined) task.completed = req.body.completed;
+  
+  await writeDB(db);
+  res.json(task);
+});
+
+app.delete("/api/projects/:projectId/tasks/:taskId", async (req, res) => {
+  const { projectId, taskId } = req.params;
+
+  const db = await readDB();
+  const project = db.projects.find(p => p.id === projectId);
+  if (!project) return res.status(404).json({ error: "Project not found" });
+
+  if (!project.tasks) project.tasks = [];
+  const before = project.tasks.length;
+  project.tasks = project.tasks.filter(t => t.id !== taskId);
+  if (project.tasks.length === before) return res.status(404).json({ error: "Task not found" });
+
+  await writeDB(db);
+  res.json({ ok: true });
 });
 
 // Upload image (returns URL)
